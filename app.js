@@ -12,7 +12,7 @@ app.use(express.json());
 // Enable CORS for frontend (both local & deployed on Render)
 const allowedOrigins = [
   "http://localhost:5173", // Local React frontend (Vite)
-  "https://your-frontend.onrender.com" // Render frontend
+  "https://products-api-frontend.onrender.com/" // Render frontend
 ];
 
 app.use(cors({
