@@ -11,8 +11,9 @@ app.use(express.json());
 
 // Enable CORS for frontend (both local & deployed on Render)
 const allowedOrigins = [
-  "http://localhost:5173", // Local React frontend (Vite)
-  "https://products-api-frontend.onrender.com/" // Render frontend
+  "https://products-frontend-7a10.onrender.com", // Old frontend
+  "https://products-api-frontend.onrender.com", // New frontend
+  "http://localhost:5173" // Local development (Vite)
 ];
 
 app.use(cors({
@@ -24,6 +25,7 @@ app.use(cors({
     }
   }
 }));
+
 
 // Database Connection
 const url = process.env.MONGODB_URL;
