@@ -4,28 +4,39 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 5000; // Set a default port if not defined
+const port = process.env.PORT || 5000; // Set default port if not defined
 const Product = require("./model/product");
 
 app.use(express.json());
-app.use(cors(
-  {
-    
+
+// Enable CORS for frontend (both local & deployed on Render)
+const allowedOrigins = [
+  "http://localhost:5173", // Local React frontend (Vite)
+  "https://your-frontend.onrender.com" // Render frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
   }
-)); // Enable CORS for all origins
+}));
 
 // Database Connection
 const url = process.env.MONGODB_URL;
-async function main() {
-  await mongoose.connect(url);
-}
-main()
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log("✅ Database connected"))
   .catch((err) => console.log("❌ DB Connection Error:", err));
 
 // Default Route
 app.get("/", (req, res) => {
-  res.send("Welcome to the E-Commerce API!");
+  res.send("Welcome to the E-Commerce API! 🎉");
 });
 
 // Get All Products (No Authentication)
